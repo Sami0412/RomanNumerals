@@ -2,45 +2,42 @@ function convertToNumeric(roman) {
     
     const conversion = {
         "I" : 1,
+        "IV" : 4,
         "V" : 5,
+        "IX" : 9,
         "X" : 10,
+        "XL": 40,
         "L" : 50,
+        "XC": 90,
         "C" : 100,
+        "CD": 400,
         "D" : 500,
+        "CM": 900,
         "M" : 1000
     };
 
     let arabic = 0;
-    let romanArray = roman.split('');
+    
+    let pattern = /IV|IX|XL|XC|CD|CM/g;
 
-    //If only single digit - find in object and return
-    //else compare values of digits
-    if (romanArray.length === 1) {
-        arabic = conversion[romanArray[0]];
-        console.log(arabic);
-        return arabic;
+    let twoDigitNumerals = roman.match(pattern);    //returns array of 2 digit numerals
+
+    if (twoDigitNumerals) {                         //If pattern matched any 2 digit numerals, convert them and add together
+        twoDigitNumerals.forEach(numeral => {
+            arabic += conversion[numeral]
+        });
     }
 
-    if (romanArray.length > 1) {
-        //Match roman numeral key to number in object
-        //Loop through array comparing adjacent index values
-        for (let i = 1; i < romanArray.length; i++) {
-            //On first loop add both values, on subsequent add existing value to current index value
-            if (conversion[romanArray[i]] > conversion[romanArray[i - 1]]) {
-               arabic += conversion[romanArray[i]] - conversion[romanArray[i - 1]];
-            }
-            if (conversion[romanArray[i]] <= conversion[romanArray[i - 1]])
-                arabic += conversion[romanArray[i]] + conversion[romanArray[i - 1]];
-            }
-        }
-        console.log(arabic);
-        return arabic;
-        }
-    //console.log(arabic);
-    //return arabic;
+    roman = roman.replace(pattern, '');     //Leaves only single digit numerals
+    
+    let romanArray = roman.split('');       //Split remaining digits into array
 
+    romanArray.forEach(numeral => {         //Convert to arabic values and add on to total
+        arabic += conversion[numeral]
+    });
 
-convertToNumeric('III');
+    return arabic;
 
+}
 
 module.exports = convertToNumeric;

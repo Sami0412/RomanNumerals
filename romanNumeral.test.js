@@ -24,5 +24,27 @@ test("passing in VI returns 6", () => {
     expect(convertToNumeric("VI")).toBe(6);
 });
 
+test("passing in VIII returns 8", () => {
+    expect(convertToNumeric("VIII")).toBe(8);
+});
+
+test("passing in XIV returns 14", () => {
+    expect(convertToNumeric("XIV")).toBe(14);
+});
+
+test("passing in MCDXCIV returns 1494", () => {
+    expect(convertToNumeric("MCDXCIV")).toBe(1494);
+});
+
+test("passing in empty string returns 0", () => {
+    expect(convertToNumeric("")).toBe(0);
+});
+
+test("passing in an invalid input returns 0", () => {
+    expect(convertToNumeric("nsjdsj")).toBe(0);
+});
 //IV subtracting the smaller unit from larger
 //VI adds larger unit to smaller one
+
+//differnce between digit > 4 e.g. VI
+//
